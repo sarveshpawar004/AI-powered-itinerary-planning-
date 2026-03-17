@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="result-header">
+    <div class="header-slideshow">
+        {% for img_url in trip.image_urls %}
+        <div class="slide" style="background-image: url('{{ img_url }}'); animation-delay: {{ loop.index0 * 5 }}s;">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="overlay"></div>
+    <div class="header-content container">
+        <h1 class="animate-up">{{ trip.trip_name }} 🗺️</h1>
+        <p class="animate-up delay-1">{{ trip.summary }}</p>
+        <div class="badges animate-up delay-2">
+            <span class="badge"><i class="fa-solid fa-money-bill"></i> {{ trip.estimated_cost.total }} 💵</span>
+            <span class="badge"><i class="fa-solid fa-cloud-sun"></i> {{ trip.weather_forecast }} 🌤️</span>
+        </div>
+    </div>
+</div>
+
+<div class="container result-body">
+
+    <div class="cols-grid">
+        <!-- Itinerary Column -->
+        <div class="itinerary-col">
+            <h2 class="section-title-left">Day by Day Plan</h2>
+            {% for day in trip.days %}
+            <div class="day-card animate-up" style="animation-delay: {{ 0.3 + (loop.index0 * 0.1) }}s;">
+                <div class="day-header">
+                    <div class="day-badge">Day {{ day.day }}</div>
+                    <div class="day-info">
+                        <h3>{{ day.theme }} 🗓️</h3>
+                        <p class="date-text"><i class="fa-regular fa-calendar"></i> {{ day.date }}</p>
+                    </div>
+                </div>
+                <div class="activities-grid">
+                    {% for activity in day.activities %}
+                    <div class="activity-item">
+                        <div class="activity-time">{{ activity.time }}</div>
+                        <div class="activity-content">
+                            <h4>{{ activity.activity }}</h4>
+                            <p>{{ activity.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="accommodation-highlight">
+                    <div class="acc-icon"><i class="fa-solid fa-hotel"></i></div>
+                    <div class="acc-details">
+                        <span class="label">Suggested Stay</span>
+                        <span class="name">{{ day.accommodation_suggestion.name }}</span>
+                        <span class="price">{{ day.accommodation_suggestion.approx_price }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Sidebar Column -->
+        <div class="sidebar-col">
+            <div class="glass-card sidebar-card animate-up delay-1">
+                <h3><i class="fa-solid fa-plane-departure"></i> Transport</h3>
+                <ul class="info-list">
+                    <li>
+                        <strong>Flight:</strong>
+                        <span>{{ trip.transport_suggestions.flight.airline }} ✈️</span>
+                        <small>{{ trip.transport_suggestions.flight.approx_price }}</small>
+                    </li>
+                    <li>
+                        <strong>Train:</strong>
+                        <span>{{ trip.transport_suggestions.train.name }} 🚆</span>
+                        <small>{{ trip.transport_suggestions.train.approx_price }}</small>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="glass-card sidebar-card animate-up delay-2">
+                <h3><i class="fa-solid fa-chart-pie"></i> Cost Breakdown</h3>
+                <div class="cost-chart">
+                    {% for key, val in trip.estimated_cost.breakdown.items() %}
+                    <div class="cost-row">
+                        <span>{{ key|title }} 📉</span>
+                        <span>{{ val }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="glass-card sidebar-card animate-up delay-3">
+                <h3><i class="fa-solid fa-suitcase"></i> Packing Tips 🧳</h3>
+                <ul class="check-list">
+                    {% for tip in trip.packing_tips %}
+                    <li><i class="fa-solid fa-check"></i> {{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="glass-card sidebar-card animate-up delay-3">
+                <h3><i class="fa-solid fa-camera"></i> Destination Gallery 📸</h3>
+                <div class="image-gallery">
+                    {% for img_url in trip.image_urls %}
+                    <img src="{{ img_url }}" alt="Destination view {{ loop.index }}" class="gallery-img">
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button onclick="window.print()" class="btn btn-secondary btn-block" style="margin-top: 20px;">
+                <i class="fa-solid fa-print"></i> Download PDF
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

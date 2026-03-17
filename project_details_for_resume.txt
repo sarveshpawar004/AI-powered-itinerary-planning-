@@ -1,0 +1,39 @@
+PROJECT TITLE: AI-Powered Smart Travel Planner
+
+PROJECT OVERVIEW:
+Developed a sophisticated, AI-driven web application that generates personalized travel itineraries based on user preferences. The system leverages Google's Gemini LLM for content generation and the Unsplash API for dynamic visual enhancement, wrapped in a modern, responsive Glassmorphism UI.
+
+TECHNOLOGY STACK:
+- Backend: Python, Flask (Web Framework)
+- AI/ML: Google Gemini Pro/Flash (Generative AI for Itineraries)
+- APIs: Unsplash API (Dynamic Image Fetching), RESTful API Design
+- Frontend: HTML5, CSS3 (Custom Glassmorphism Design), JavaScript (ES6+), Jinja2 Templating
+- Deployment/Environment: Gunicorn (likely for production), Python-dotenv for configuration management
+
+KEY FEATURES & TECHNICAL HIGHLIGHTS (DEEP DIVE POINTS):
+
+1.  Generative AI Integration (Gemini):
+    -   Implemented a robust prompt engineering strategy to interface with Google's Gemini model (`gemini-3-flash-preview`).
+    -   Designed a structured prompt that forces the LLM to return strict JSON data, ensuring reliable parsing of complex itinerary details (day-by-day breakdown, budget estimates, activity types).
+    -   Context-aware generation: The AI accounts for travel style (e.g., Luxury, Backpacking), budget constraints, and transportation preferences to create truly personalized plans.
+
+2.  Dynamic Visual Content Pipeline:
+    -   Built a dedicated Image Service (`services/image_service.py`) that asynchronously fetches high-quality, location-specific images from the Unsplash API.
+    -   Implemented error handling and fallback mechanisms to ensure the UI remains polished even if external API rate limits are reached.
+    -   Images are dynamically mapped to specific destinations and activities within the generated itinerary, enhancing user engagement.
+
+3.  Modern UI/UX Design (Glassmorphism):
+    -   Crafted a custom CSS framework centering on the "Glassmorphism" aesthetic (translucent backgrounds, background blurs, subtle borders).
+    -   Implemented complex CSS animations (`fadeInUp`, `zoomDrift`, `fadeSlide`) to create an immersive, app-like experience.
+    -   Fully responsive layout utilizing CSS Grid and Flexbox to ensure seamless functionality across mobile and desktop devices.
+    -   Developed a dynamic slideshow header for the results page that visually immerses the user in their destination immediately.
+
+4.  Architecture & State Management:
+    -   Designed a clean, modular Flask architecture separating concerns into Services (Business Logic), Routes (Controller), and Templates (View).
+    -   Utilized server-side Session management to handle multi-step user flows without requiring a heavyweight database for transient search data.
+    -   Implemented strict server-side validation for user inputs to prevent malformed requests and ensure stability.
+
+5.  Performance & Optimization:
+    -   Optimized API calls to minimize latency during the itinerary generation process.
+    -   Used lightweight, semantic HTML and efficient CSS selectors for fast rendering performance.
+    -   Implemented client-side interactivity using vanilla JavaScript for a lightweight footprint, avoiding the overhead of heavy frontend frameworks for this specific use case.
